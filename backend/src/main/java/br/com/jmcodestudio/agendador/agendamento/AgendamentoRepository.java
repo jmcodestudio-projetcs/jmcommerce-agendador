@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -33,4 +34,22 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
                                     @Param("status") Collection<StatusAgendamento> status,
                                     @Param("de") LocalDate de,
                                     @Param("ate") LocalDate ate);
+
+    /** Busca sempre junto com o dono: um fotografo nunca enxerga agendamento de outro. */
+    Optional<Agendamento> findByIdAndFotografoId(Long id, Long fotografoId);
+
+    /** Listagem do painel, ja trazendo servico e horario para evitar consultas extras. */
+    @Query("""
+            select a from Agendamento a
+            join fetch a.servico
+            left join fetch a.horario
+            where a.fotografo.id = :fotografoId
+              and a.status in :status
+              and a.data between :de and :ate
+            order by a.data, a.hora
+            """)
+    List<Agendamento> listarDoPainel(@Param("fotografoId") Long fotografoId,
+                                     @Param("status") Collection<StatusAgendamento> status,
+                                     @Param("de") LocalDate de,
+                                     @Param("ate") LocalDate ate);
 }
