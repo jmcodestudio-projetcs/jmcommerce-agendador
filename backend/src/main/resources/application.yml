@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: jmcommerce-agendador
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/agendador}
+    username: ${DB_USER:agendador}
+    password: ${DB_PASSWORD:agendador}
+  jpa:
+    hibernate:
+      ddl-auto: validate   # o Flyway e o unico dono do schema
+    open-in-view: false
+  flyway:
+    enabled: true
+  jackson:
+    time-zone: America/Sao_Paulo
+
+server:
+  port: 8080

@@ -1,0 +1,16 @@
+# Banco de desenvolvimento. Subir com: docker compose up -d
+services:
+  postgres:
+    image: postgres:16
+    container_name: agendador-postgres
+    environment:
+      POSTGRES_DB: agendador
+      POSTGRES_USER: agendador
+      POSTGRES_PASSWORD: agendador
+    ports:
+      - "5432:5432"
+    volumes:
+      - agendador-pgdata:/var/lib/postgresql/data
+
+volumes:
+  agendador-pgdata:
