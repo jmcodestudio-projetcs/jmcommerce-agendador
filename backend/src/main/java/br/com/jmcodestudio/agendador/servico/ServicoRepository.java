@@ -10,6 +10,9 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 
     List<Servico> findByFotografoIdOrderByNomeAsc(Long fotografoId);
 
+    /** Servicos que aparecem na pagina publica. */
+    List<Servico> findByFotografoIdAndAtivoTrueOrderByNomeAsc(Long fotografoId);
+
     /** Busca sempre junto com o dono: um fotografo nunca enxerga servico de outro. */
     Optional<Servico> findByIdAndFotografoId(Long id, Long fotografoId);
 }

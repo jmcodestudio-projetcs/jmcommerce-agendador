@@ -9,6 +9,8 @@ public interface FotografoRepository extends JpaRepository<Fotografo, Long> {
 
     Optional<Fotografo> findByEmail(String email);
 
+    Optional<Fotografo> findBySlug(String slug);
+
     boolean existsByEmail(String email);
 
     boolean existsBySlug(String slug);
